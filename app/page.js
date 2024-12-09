@@ -10,10 +10,14 @@ import DraggableWrapper from "@/components/misc/DraggableWrapper";
 import TestsDiv from "@/components/misc/TestsDiv";
 import DraggableTestsDiv from "@/components/misc/DraggableTestsDiv";
 import { DndContext } from "@dnd-kit/core";
+import FinancialChart from "@/components/misc/FinancialChart";
+import Filters from "@/components/misc/Filters";
 
 export default function Home() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const { chatbotVisibility, toggleChatbotVisibility } = useNavStore();
+  const { chartVisibility, toggleChartVisibility } = useNavStore();
+  const { filtersVisibility, toggleFiltersVisibility } = useNavStore();
   const chatbotRef = useRef(null); 
 
   const handleDragEnd = (event) => {
@@ -52,15 +56,26 @@ export default function Home() {
     <div className="h-screen gradient-anim">
         <main className="relative content-center h-full w-full">
           {chatbotVisibility && (
-            // <TestsDiv position={position} onDragEnd={handleDragEnd} />
-            <Wrapper>
               <ChatbotInterface />
-            </Wrapper>
+          )}
+
+          {chartVisibility && (
+            <FinancialChart />
+          )}
+          
+          {filtersVisibility && (
+            <Filters />
           )}
           <BottomNav
             onItemClick={(item) => {
               if (item === "Chat") {
                 toggleChatbotVisibility();
+              }
+              else if (item === "Visualisations") {
+                toggleChartVisibility();
+              }
+              else if (item === "Filtres") {
+                toggleFiltersVisibility();
               }
               console.log(`Clicked ${item}`);
             }}

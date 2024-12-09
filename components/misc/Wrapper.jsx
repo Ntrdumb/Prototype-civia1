@@ -29,7 +29,7 @@ const Wrapper = ({ children, style = {}, initialWidth = 200, initialHeight = 200
       position={{ x: dimensions.x, y: dimensions.y }}
       onDragStop={handleDragStop}
       onResizeStop={handleResizeStop}
-      bounds="parent" // optional, limits movement to the parent container
+      bounds="parent" 
     >
       {children}
     </Rnd>
