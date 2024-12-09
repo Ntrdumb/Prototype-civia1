@@ -32,31 +32,10 @@ export default function Home() {
   };
   
   return (
-    // <DndContext onDragEnd={handleDragEnd}>
-      // <div className="h-screen gradient-anim">
-      //     <main className="relative content-center h-full w-full">
-      //       {/* <Wrapper title="Chatbot"> */}
-      //         {/* <Chatbot /> */}
-      //       {/* </Wrapper> */}
-      //       {chatbotVisibility && (
-      //         <TestsDiv position={position} onDragEnd={handleDragEnd} />
-      //       )}
-      //       <BottomNav
-      //         onItemClick={(item) => {
-      //           if (item === "Chat") {
-      //             toggleChatbotVisibility();
-      //           }
-      //           console.log(`Clicked ${item}`);
-      //         }}
-      //       />
-      //     </main>
-      // </div>
-    // </DndContext>
-
     <div className="h-screen gradient-anim">
         <main className="relative content-center h-full w-full">
           {chatbotVisibility && (
-              <ChatbotInterface />
+              <ChatbotInterface dimensions={{ width: 400, height: 500 }} />
           )}
 
           {chartVisibility && (

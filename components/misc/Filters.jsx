@@ -17,7 +17,7 @@ import * as SliderPrimitive from "@radix-ui/react-slider";
 import Image from "next/image";
 import resizerIcon from "@/public/icons/resize-window.svg"; 
 
-export default function Filters() {
+export default function Filters(dimensions = { width: 400, height: 396}) {
   const [selectedMonth, setSelectedMonth] = useState(3);
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
 

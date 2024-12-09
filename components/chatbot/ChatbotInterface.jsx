@@ -20,7 +20,7 @@ const initialMessages = [
   },
 ];
 
-export default function ChatbotInterface() {
+export default function ChatbotInterface({ dimensions = { width: 200, height: 200 } }) {
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null);
@@ -54,32 +54,36 @@ export default function ChatbotInterface() {
       default={{
         x: 0,
         y: 0,
-        width: 400,
-        height: 500,
+        width: dimensions.width,
+        height: dimensions.height,
       }}
       bounds="window"
-      minWidth={300} 
-      minHeight={300} 
-      resizeHandleStyles={{
-        bottomRight: { pointerEvents: "auto" }, 
-      }}
+      minWidth={370} 
+      minHeight={375} 
+      maxWidth={700}
+      maxHeight={785}
       resizeHandleComponent={{
         bottomRight: (
-          <div className="opacity-30 absolute bottom-1.5 right-1.5 pointer-events-none z-50">
+          <div className="absolute bottom-1.5 right-1.5 pointer-events-none z-50">
             <Image
               src={resizerIcon}
               alt="corner-drag"
               width={20}
               height={20}
-              className="pointer-events-none"
+              className="opacity-30"
             />
           </div>
         ),
       }}
       enableResizing={{
+        left: false,
+        right: false,
+        top: false,
+        down: false,
         bottomRight: true, 
       }}
       lockAspectRatio={false} 
+      style={{ cursor: "default" }} 
       onResizeStop={(e, direction, ref) => {
         const width = ref.style.width.replace("px", "");
         const height = ref.style.height.replace("px", "");
@@ -88,9 +92,6 @@ export default function ChatbotInterface() {
       }}
     >
       <Card className="flex flex-col w-full h-full relative">
-        {/* <CardHeader className="cursor-move">
-          <CardTitle>Chatbot</CardTitle>
-        </CardHeader> */}
         <CardContent className="flex-1 overflow-auto p-4 space-y-4">
           {messages.map((message, index) => (
             <div
