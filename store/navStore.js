@@ -4,7 +4,7 @@ const useNavStore = create((set) => ({
     chatbotVisibility: true, 
     toggleChatbotVisibility: () => set((state) => ({ chatbotVisibility: !state.chatbotVisibility })),
 
-    chartVisibility: false, 
+    chartVisibility: true, 
     toggleChartVisibility: () => set((state) => ({ chartVisibility: !state.chartVisibility })),
     
     filtersVisibility: false, 

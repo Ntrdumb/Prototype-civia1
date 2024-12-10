@@ -79,8 +79,11 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
         left: false,
         right: false,
         top: false,
-        down: false,
+        bottom: false,
         bottomRight: true, 
+        bottomLeft: false,
+        topRight: false,
+        topLeft: false, 
       }}
       lockAspectRatio={false} 
       style={{ cursor: "default" }} 

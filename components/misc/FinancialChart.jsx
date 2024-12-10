@@ -15,7 +15,7 @@ const data = [
   { year: "2027", amount: 6000000 },
 ];
 
-export default function FinancialChart() {
+export default function FinancialChart(dimensions = { width: 700, height: 400}) {
   const formatYAxis = (value) => {
     if (value >= 1000000) return `${value / 1000000}M`;
     if (value >= 1000) return `${value / 1000}K`;
@@ -23,45 +23,54 @@ export default function FinancialChart() {
   };
 
   return (
-    <Rnd
-      default={{
-        x: 0,
-        y: 0,
-        width: 600,
-        height: 500,
-      }}
-      scale={0.98}
-      bounds="window"
-      minWidth={400}
-      minHeight={400}
-      resizeHandleStyles={{
-        bottomRight: { pointerEvents: "auto" },
-      }}
-      resizeHandleComponent={{
-        bottomRight: (
-          <div className="opacity-30 absolute bottom-1.5 right-1.5 pointer-events-none z-50">
-            <Image
-              src={resizerIcon}
-              alt="corner-drag"
-              width={20}
-              height={20}
-              className="pointer-events-none"
-            />
-          </div>
-        ),
-      }}
-      enableResizing={{
-        bottomRight: true,
-      }}
-      lockAspectRatio={false}
-    >
-      <Card className="flex flex-col w-full h-full overflow-hidden">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-7">
-          <CardTitle className="text-2xl font-bold">Prévisions financières</CardTitle>
+    // <Rnd
+    //   default={{
+    //     x: 0,
+    //     y: 0,
+    //     width: dimensions.width,
+    //     height: dimensions.height,
+    //   }}
+    //   bounds="window"
+    //   minWidth={670} 
+    //   minHeight={575} 
+    //   maxWidth={800}
+    //   maxHeight={685}
+    //   resizeHandleComponent={{
+    //     bottomRight: (
+    //       <div className="absolute bottom-1.5 right-1.5 pointer-events-none z-50">
+    //         <Image
+    //           src={resizerIcon}
+    //           alt="corner-drag"
+    //           width={20}
+    //           height={20}
+    //           className="opacity-30"
+    //         />
+    //       </div>
+    //     ),
+    //   }}
+    //   enableResizing={{
+    //     left: false,
+    //     right: false,
+    //     top: false,
+    //     down: false,
+    //     bottomRight: true, 
+    //   }}
+    //   lockAspectRatio={false} 
+    //   style={{ cursor: "default" }} 
+    //   onResizeStop={(e, direction, ref) => {
+    //     const width = ref.style.width.replace("px", "");
+    //     const height = ref.style.height.replace("px", "");
+
+    //     console.log("Resized to:", { width, height });
+    //   }}
+    // >
+      <Card className="flex flex-col w-full h-full relative bg-red-200">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle className="text-xl">Prévisions financières</CardTitle>
           <div className="flex gap-2">
-            <Button variant="ghost" size="icon" className="rounded-full">
+            {/* <Button variant="ghost" size="icon" className="rounded-full">
               <X className="h-4 w-4" />
-            </Button>
+            </Button> */}
             <Button variant="ghost" size="icon" className="rounded-full bg-emerald-50">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -90,14 +99,14 @@ export default function FinancialChart() {
                 color: "hsl(158 84% 77%)",
               },
             }}
-            className="h-full w-full overflow-hidden"
+            className="h-full w-full overflow-hidden bg-red-500"
           >
             <BarChart
               data={data}
               margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
               style={{ width: "100%", height: "100%" }}
             >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+              <CartesianGrid strokeDasharray="1 1" vertical={false} stroke="#E5E7EB" />
               <XAxis
                 dataKey="year"
                 axisLine={false}
@@ -130,11 +139,11 @@ export default function FinancialChart() {
                   return null;
                 }}
               />
-              <Bar dataKey="amount" fill="#26CF64" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="amount" fill="#62CC9F" radius={[2, 2, 0, 0]} />
             </BarChart>
           </ChartContainer>
         </CardContent>
       </Card>
-    </Rnd>
+    // </Rnd>
   );
 }
