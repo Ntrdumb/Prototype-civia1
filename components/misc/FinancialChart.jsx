@@ -9,6 +9,7 @@ import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import Image from "next/image";
 import resizerIcon from "@/public/icons/resize-window.svg"; 
 import ActualBarChart from "./ActualBarChart";
+import Icons from "../icons/icons";
 
 const data = [
   { year: "2025", amount: 1000000 },
@@ -65,7 +66,7 @@ export default function FinancialChart(dimensions = { width: 700, height: 400}) 
     //     console.log("Resized to:", { width, height });
     //   }}
     // >
-      <Card className="flex flex-col w-full h-full relative bg-red-200">
+      <Card className="flex flex-col w-full bg-red-200">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-xl">Prévisions financières</CardTitle>
           <div className="flex gap-2">
@@ -73,7 +74,7 @@ export default function FinancialChart(dimensions = { width: 700, height: 400}) 
               <X className="h-4 w-4" />
             </Button> */}
             <Button variant="ghost" size="icon" className="rounded-full bg-emerald-50">
-              <svg
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
@@ -88,7 +89,8 @@ export default function FinancialChart(dimensions = { width: 700, height: 400}) 
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-              </svg>
+              </svg> */}
+              <Icons.PdfExport color="#0D9488"/>
             </Button>
           </div>
         </CardHeader>

@@ -15,11 +15,17 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import useChatStore from "@/reducer/chatStore";
-
+import Icons from "../icons/icons";
+import PopoverButton from "../builder/PopoverButton";
   
 export default function Visualisations({ dimensions = { width: 200, height: 200 } }) {
     const chunks = useChatStore((state) => state.chunks);
+
+    const popoverContentButtons = ['Rapport Finances', 'Rapport Emplois', 'Nouveau rapport'];
 
     const processedChunks = useMemo(() => {
       if (!chunks) return [];
@@ -81,37 +87,60 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
               <CardHeader>
                 <CardTitle className="text-2xl">Visualisations</CardTitle>
               </CardHeader>
-              <CardContent className="flex-1 overflow-hidden p-4 flex justify-center items-center bg-blue-200">
-                  <Carousel className="w-full max-w-xl bg-blue-500">
+              <CardContent className="flex-1 overflow-hidden p-1 flex justify-center items-center mb-10">
+                  <Carousel className="w-full max-w-xl max-h-fit">
                     <CarouselContent>
                       {processedChunks.length > 0
                         ? processedChunks.map((chunk, index) => (
                             <CarouselItem key={index}>
                               <div className="p-1">
-                                <Card className="bg-blue-800">
-                                  <CardContent className="flex aspect-video flex-col items-center justify-center p-1">
+                                <Card className="">
+                                  <CardContent className="flex aspect-video flex-col items-center justify-center p-1 max-h-fit">
+                                  <div className="flex w-full justify-between">
                                     <span>
-                                      {chunk.score}
+                                      Accuracy : {chunk.score}
                                     </span>
+                                    <PopoverButton
+                                      title="Ajouter à"
+                                      onInteraction="click"
+                                      content={
+                                        <div className="flex flex-col space-y-2">
+                                          {popoverContentButtons.map((text, index) => (
+                                            <Button key={index} variant="ghost" size="sm" className="justify-start">
+                                              {text}
+                                            </Button>
+                                          ))}
+                                        </div>
+                                      }
+                                    >
+                                      <Button variant="ghost" size="icon" className="rounded-full bg-emerald-50">
+                                        <Icons.PdfExport color="#0D9488"/>
+                                      </Button>
+                                    </PopoverButton>
+                                  </div>
                                     <span className="text-sm font-medium">
                                       {chunk.file}
                                     </span>
-                                    <span className="text-xs font-normal">
-                                      {chunk.content}
-                                    </span>
+                                    <Separator className="my-1" />
+                                    <ScrollArea className="w-full h-full pr-2">
+                                      <span className="text-xs font-normal">
+                                        {chunk.content}
+                                      </span>
+                                    </ScrollArea>
                                   </CardContent>
                                 </Card>
                               </div>
                             </CarouselItem>
                           ))
-                        : Array.from({ length: 5 }).map((_, index) => (
+                        : Array.from({ length: 0 }).map((_, index) => (
                             <CarouselItem key={index}>
                               <div className="p-1">
                                 <Card className="bg-blue-800">
-                                  <CardContent className="flex aspect-video items-center justify-center p-1">
-                                    <span className="text-4xl font-semibold">
+                                  <CardContent className="flex aspect-video flex-col items-center justify-center p-1">
+                                    {/* <span className="text-4xl font-semibold">
                                       {index + 1}
-                                    </span>
+                                    </span> */}
+                                    <FinancialChart />
                                   </CardContent>
                                 </Card>
                               </div>

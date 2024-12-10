@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const apiUrl = 'http://34.123.101.138:8080/api/sagard_qna';
+const apiUrl = 'http://35.232.197.166:8080/api/sagard_qna';
 
 export async function POST(req) {
   try {
@@ -26,7 +26,7 @@ export async function POST(req) {
     const result = await response.json();
     console.log(result);
 
-    return NextResponse.json(result.reponse, { status: 200 });
+    return NextResponse.json({chunks: result.chunks, botResponse: result.reponse}, { status: 200 });
   } catch (error) {
     console.error('Error with External API request:', error);
     return NextResponse.json({ error: 'An error occurred while communicating with the external API' }, { status: 500 });
