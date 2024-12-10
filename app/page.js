@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import useNavStore from "@/store/navStore";
+import useNavStore from "@/reducer/navStore";
 import { BottomNav } from "@/components/nav/BottomNav";
 import Chatbot from "@/components/chatbot/Chatbot";
 import ChatbotInterface from "@/components/chatbot/ChatbotInterface";

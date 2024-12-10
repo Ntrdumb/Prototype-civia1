@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { Rnd } from "react-rnd";
 import Image from "next/image";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
@@ -14,9 +14,23 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
+} from "@/components/ui/carousel";
+import useChatStore from "@/reducer/chatStore";
+
   
 export default function Visualisations({ dimensions = { width: 200, height: 200 } }) {
+    const chunks = useChatStore((state) => state.chunks);
+
+    const processedChunks = useMemo(() => {
+      if (!chunks) return [];
+      
+      // Porcessing in the meat grinder
+      return chunks.map((chunk) => ({
+        file: chunk[0],
+        content: chunk[1],
+        score: (chunk[2]*100).toFixed(2),
+      }));
+    }, [chunks]);
 
     return (
         <Rnd
@@ -70,20 +84,40 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
               <CardContent className="flex-1 overflow-hidden p-4 flex justify-center items-center bg-blue-200">
                   <Carousel className="w-full max-w-xl bg-blue-500">
                     <CarouselContent>
-                      {Array.from({ length: 5 }).map(function (_, index) {
-                        return (
-                          <CarouselItem key={index}>
-                            <div className="p-1">
-                              <Card className="bg-blue-800">
-                                {/* <CardContent className="flex aspect-video items-center justify-center p-1"> */}
-                                  {/* <span className="text-4xl font-semibold">{index + 1}</span> */}
-                                  <FinancialChart />
-                                {/* </CardContent> */}
-                              </Card>
-                            </div>
-                          </CarouselItem>
-                        );
-                      })}
+                      {processedChunks.length > 0
+                        ? processedChunks.map((chunk, index) => (
+                            <CarouselItem key={index}>
+                              <div className="p-1">
+                                <Card className="bg-blue-800">
+                                  <CardContent className="flex aspect-video flex-col items-center justify-center p-1">
+                                    <span>
+                                      {chunk.score}
+                                    </span>
+                                    <span className="text-sm font-medium">
+                                      {chunk.file}
+                                    </span>
+                                    <span className="text-xs font-normal">
+                                      {chunk.content}
+                                    </span>
+                                  </CardContent>
+                                </Card>
+                              </div>
+                            </CarouselItem>
+                          ))
+                        : Array.from({ length: 5 }).map((_, index) => (
+                            <CarouselItem key={index}>
+                              <div className="p-1">
+                                <Card className="bg-blue-800">
+                                  <CardContent className="flex aspect-video items-center justify-center p-1">
+                                    <span className="text-4xl font-semibold">
+                                      {index + 1}
+                                    </span>
+                                  </CardContent>
+                                </Card>
+                              </div>
+                            </CarouselItem>
+                        ))
+                      }
                     </CarouselContent>
                     <CarouselPrevious />
                     <CarouselNext />
