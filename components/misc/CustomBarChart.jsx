@@ -15,13 +15,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-
-
-const data = [
-    { year: "2025", amount: 1000000 },
-    { year: "2026", amount: 2500000 },
-    { year: "2027", amount: 6000000 },
-  ];
   
 export default function CustomBarChart({ dimensions = { width: 200, height: 200 } }) {
 

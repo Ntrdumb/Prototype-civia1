@@ -8,6 +8,7 @@ import { X } from "lucide-react";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import Image from "next/image";
 import resizerIcon from "@/public/icons/resize-window.svg"; 
+import ActualBarChart from "./ActualBarChart";
 
 const data = [
   { year: "2025", amount: 1000000 },
@@ -92,7 +93,8 @@ export default function FinancialChart(dimensions = { width: 700, height: 400}) 
           </div>
         </CardHeader>
         <CardContent>
-          <ChartContainer
+          <ActualBarChart />
+          {/* <ChartContainer
             config={{
               amount: {
                 label: "Amount",
@@ -117,8 +119,8 @@ export default function FinancialChart(dimensions = { width: 700, height: 400}) 
                 axisLine={false}
                 tickLine={false}
                 tick={{ fill: "#374151" }}
-                tickFormatter={formatYAxis}
-                width={80}
+                // tickFormatter={formatYAxis}
+                // width={80}
                 domain={[0, Math.max(...data.map((d) => d.amount)) * 1.2]}
               />
               <Tooltip
@@ -141,7 +143,7 @@ export default function FinancialChart(dimensions = { width: 700, height: 400}) 
               />
               <Bar dataKey="amount" fill="#62CC9F" radius={[2, 2, 0, 0]} />
             </BarChart>
-          </ChartContainer>
+          </ChartContainer> */}
         </CardContent>
       </Card>
     // </Rnd>
