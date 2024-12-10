@@ -36,9 +36,7 @@ export default function Filters(dimensions = { width: 400, height: 396}) {
       bounds="window"
       minWidth={300} 
       minHeight={300} 
-      resizeHandleStyles={{
-        bottomRight: { pointerEvents: "auto" }, 
-      }}
+      style={{ cursor: "default" }} 
       resizeHandleComponent={{
         bottomRight: (
           <div className="opacity-30 absolute bottom-1.5 right-1.5 pointer-events-none z-50">
@@ -53,7 +51,14 @@ export default function Filters(dimensions = { width: 400, height: 396}) {
         ),
       }}
       enableResizing={{
+        left: false,
+        right: false,
+        top: false,
+        bottom: false,
         bottomRight: true, 
+        bottomLeft: false,
+        topRight: false,
+        topLeft: false,
       }}
       lockAspectRatio={false} 
       onResizeStop={(e, direction, ref) => {

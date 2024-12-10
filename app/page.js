@@ -12,7 +12,7 @@ import DraggableTestsDiv from "@/components/misc/DraggableTestsDiv";
 import { DndContext } from "@dnd-kit/core";
 import FinancialChart from "@/components/misc/FinancialChart";
 import Filters from "@/components/misc/Filters";
-import CustomBarChart from "@/components/misc/CustomBarChart";
+import Visualisations from "@/components/misc/Visualisations";
 
 export default function Home() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -41,7 +41,7 @@ export default function Home() {
 
           {chartVisibility && (
             // <FinancialChart dimensions={{ width: 200, height: 600 }} />
-            <CustomBarChart dimensions={{ width: 700, height: 500 }} />
+            <Visualisations dimensions={{ width: 700, height: 500 }} />
           )}
           
           {filtersVisibility && (

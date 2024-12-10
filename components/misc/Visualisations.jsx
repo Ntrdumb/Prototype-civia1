@@ -16,7 +16,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
   
-export default function CustomBarChart({ dimensions = { width: 200, height: 200 } }) {
+export default function Visualisations({ dimensions = { width: 200, height: 200 } }) {
 
     return (
         <Rnd
@@ -70,7 +70,7 @@ export default function CustomBarChart({ dimensions = { width: 200, height: 200 
               <CardContent className="flex-1 overflow-hidden p-4 flex justify-center items-center bg-blue-200">
                   <Carousel className="w-full max-w-xl bg-blue-500">
                     <CarouselContent>
-                      {Array.from({ length: 2 }).map(function (_, index) {
+                      {Array.from({ length: 5 }).map(function (_, index) {
                         return (
                           <CarouselItem key={index}>
                             <div className="p-1">
