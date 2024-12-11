@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const apiUrl = 'http://35.232.197.166:8080/api/sagard_qna';
+const apiUrl = 'http://34.41.106.140:8080/api/sagard_qna';
 
 export async function POST(req) {
   try {
