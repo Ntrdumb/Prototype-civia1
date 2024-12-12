@@ -62,7 +62,7 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
       setCurrent(api.selectedScrollSnap() + 1);
     });
   }, [api]);
-
+    
   const processedChunks = useMemo(() => {
     if (!chunks) return [];
     return chunks.map((chunk) => ({
@@ -71,6 +71,13 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
       score: (chunk[2] * 100).toFixed(2),
     }));
   }, [chunks]);
+
+  useEffect(() => {
+    if (api && processedChunks.length > 0) {
+      api.scrollTo(0); 
+      setCurrent(1);   
+    }
+  }, [processedChunks, api]);
 
   const handleMinimize = () => {
     setIsCollapsed((prev) => !prev);

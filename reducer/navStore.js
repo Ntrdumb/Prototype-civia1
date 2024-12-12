@@ -1,10 +1,10 @@
 import { create } from "zustand";
 
 const useNavStore = create((set) => ({
-    chatbotVisibility: true, 
+    chatbotVisibility: false, 
     toggleChatbotVisibility: () => set((state) => ({ chatbotVisibility: !state.chatbotVisibility })),
 
-    chartVisibility: true, 
+    chartVisibility: false, 
     toggleChartVisibility: () => set((state) => ({ chartVisibility: !state.chartVisibility })),
     
     filtersVisibility: false, 
