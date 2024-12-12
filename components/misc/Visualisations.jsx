@@ -38,6 +38,10 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
   const { toggleChartVisibility } = useNavStore();
   const chunks = useChatStore((state) => state.chunks);
 
+  const [api, setApi] = useState(null);
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
   const popoverContentButtons = ["Rapport Finances", "Rapport Emplois", "Nouveau rapport"];
   
   // Could be replaced 
@@ -47,6 +51,17 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
     const y = window.innerWidth / 15;
     setPosition({ x, y });
   }, [dimensions.width]);
+
+  useEffect(() => {
+    if (!api) return;
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
 
   const processedChunks = useMemo(() => {
     if (!chunks) return [];
@@ -154,12 +169,13 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
           >
             <CardContent className="flex-1 overflow-hidden p-1 flex grow justify-center items-center mt-10">
               <Carousel 
+                setApi={setApi}
                 className="w-full max-w-xl max-h-fit" 
                 opts={{
                   align: "center",
                   loop: true,
-                  skipSnaps: true,
-                  containScroll: "trimSnaps",
+                  // skipSnaps: true,
+                  // containScroll: "trimSnaps",
                 }}
               >
                 <CarouselContent className="ml-1 mr-1">
@@ -199,6 +215,22 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
                   <>
                     <CarouselPrevious />
                     <CarouselNext />
+                    {/* This one's for text indicator, but it's lame */}
+                    {/* <div className="py-2 text-center text-sm">
+                      Slide {current} of {processedChunks.length}
+                    </div> */}
+                    {/* This one's cooler */}
+                    <div className="flex justify-center space-x-2 py-2">
+                      {processedChunks.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => api?.scrollTo(index)}
+                          className={`w-3 h-3 rounded-full ${
+                            current === index + 1 ? "bg-teal-500" : "bg-gray-300"
+                          }`}
+                        />
+                      ))}
+                    </div>
                   </>
                 )}
               </Carousel>
