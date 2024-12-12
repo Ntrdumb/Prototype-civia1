@@ -9,15 +9,16 @@ export function BottomNav({ className, onItemClick, ...props }) {
   const [indicatorPosition, setIndicatorPosition] = useState(0);
 
   const navItems = [
-    { icon: <Sparkles className="h-8 w-8 text-teal-600" />, label: "Chat" },
-    // { icon: <Download className="h-5 w-5 text-teal-600" />, label: "Téléverser" },
-    { icon: <Filter className="h-8 w-8 text-teal-600" />, label: "Filtres" },
-    { icon: <PieChart className="h-8 w-8 text-teal-600" />, label: "Visualisations" },
-    { icon: <FileText className="h-8 w-8 text-teal-600" />, label: "Rapport" },
+    { icon: <Sparkles className="!h-8 !w-8 text-teal-600" />, label: "Chat" },
+    { icon: <Filter className="!h-8 !w-8 text-teal-600" />, label: "Filtres" },
+    { icon: <PieChart className="!h-8 !w-8 text-teal-600" />, label: "Visualisations" },
+    { icon: <FileText className="!h-8 !w-8 text-gray-400" />, label: "Rapport", locked: true },
   ];
 
   const handleMouseEnter = (index) => {
-    setIndicatorPosition(index);
+    if (!navItems[index].locked) {
+      setIndicatorPosition(index);
+    }
   };
 
   return (
@@ -27,19 +28,22 @@ export function BottomNav({ className, onItemClick, ...props }) {
         <div
           className="absolute bottom-0 h-1 w-16 bg-teal-600 rounded-full transition-transform duration-300"
           style={{
-            transform: `translateX(${indicatorPosition * 5}rem)`, // A changer si jamais c pas centered under button
+            transform: `translateX(${indicatorPosition * 5}rem)`,
           }}
         ></div>
 
         {/* Buttons with Tooltip */}
         {navItems.map((item, index) => (
-          <Tooltip key={item.label} label={item.label}> {/* I couldve used react-tooltip */}
+          <Tooltip key={item.label} label={item.label}>
             <Button
               variant="ghost"
               size="icon"
-              className="relative group h-16 w-16 rounded-full border border-teal-600 hover:bg-emerald-50"
+              className={`relative group h-16 w-16 rounded-full border ${
+                item.locked ? "border-gray-300 cursor-not-allowed opacity-50" : "border-teal-600 hover:bg-emerald-50"
+              }`}
               onMouseEnter={() => handleMouseEnter(index)}
-              onClick={() => onItemClick && onItemClick(item.label)}
+              onClick={() => !item.locked && onItemClick && onItemClick(item.label)}
+              disabled={item.locked} 
             >
               {item.icon}
               <span className="sr-only">{item.label}</span>

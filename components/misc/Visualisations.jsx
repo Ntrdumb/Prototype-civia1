@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Rnd } from "react-rnd";
 import Image from "next/image";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import resizerIcon from "@/public/icons/resize-window.svg"; 
+import { X, Minus } from "lucide-react";
 import FinancialChart from "./FinancialChart";
 import {
   Carousel,
@@ -15,144 +16,182 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import useChatStore from "@/reducer/chatStore";
 import Icons from "../icons/icons";
 import PopoverButton from "../builder/PopoverButton";
+import useNavStore from "@/reducer/navStore";
   
 export default function Visualisations({ dimensions = { width: 200, height: 200 } }) {
-    const chunks = useChatStore((state) => state.chunks);
+  const [componentSize, setComponentSize] = useState({
+    width: dimensions.width,
+    height: dimensions.height
+  });
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const { toggleChartVisibility } = useNavStore();
+  const chunks = useChatStore((state) => state.chunks);
 
-    const popoverContentButtons = ['Rapport Finances', 'Rapport Emplois', 'Nouveau rapport'];
+  const popoverContentButtons = ["Rapport Finances", "Rapport Emplois", "Nouveau rapport"];
 
-    const processedChunks = useMemo(() => {
-      if (!chunks) return [];
-      
-      // Porcessing in the meat grinder
-      return chunks.map((chunk) => ({
-        file: chunk[0],
-        content: chunk[1],
-        score: (chunk[2]*100).toFixed(2),
-      }));
-    }, [chunks]);
+  const processedChunks = useMemo(() => {
+    if (!chunks) return [];
+    return chunks.map((chunk) => ({
+      file: chunk[0],
+      content: chunk[1],
+      score: (chunk[2] * 100).toFixed(2),
+    }));
+  }, [chunks]);
 
-    return (
-        <Rnd
-          default={{
-            x: 0,
-            y: 0,
-            width: dimensions.width,
-            height: dimensions.height,
-          }}
-          bounds="window"
-          minWidth={700} 
-          minHeight={450} 
-          maxWidth={750}
-          maxHeight={500}
-          resizeHandleComponent={{
-            bottomRight: (
-              <div className="absolute bottom-1.5 right-1.5 pointer-events-none z-50">
-                <Image
-                  src={resizerIcon}
-                  alt="corner-drag"
-                  width={20}
-                  height={20}
-                  className="opacity-30"
-                />
-              </div>
-            ),
-          }}
-          enableResizing={{
-            left: false,
-            right: false,
-            top: false,
-            bottom: false,
-            bottomRight: true, 
-            bottomLeft: false,
-            topRight: false,
-            topLeft: false,
-          }}
-          lockAspectRatio={false} 
-          style={{ cursor: "default" }} 
-          onResizeStop={(e, direction, ref) => {
-            const width = ref.style.width.replace("px", "");
-            const height = ref.style.height.replace("px", "");
-    
-            console.log("Resized to:", { width, height });
-          }}
+  const handleMinimize = () => {
+    setIsCollapsed((prev) => !prev);
+  };
+
+  const handleClose = () => {
+    toggleChartVisibility();
+  };
+
+  return (
+    <Rnd
+      default={{
+        x: 0,
+        y: 0,
+        width: dimensions.width,
+        height: dimensions.height,
+      }}
+      size={{
+        width: componentSize.width,
+        height: isCollapsed ? 100 : componentSize.height,
+      }}
+      bounds="window"
+      minWidth={700}
+      minHeight={isCollapsed ? 100 : 430}
+      maxWidth={750}
+      maxHeight={isCollapsed ? 100 : 500}
+      resizeHandleStyles={{ bottomRight: { right: "1px", bottom: "1px" } }}
+      resizeHandleComponent={{
+        bottomRight: (
+          <div className="absolute bottom-1.5 right-1.5 pointer-events-none z-50">
+            <Image
+              src={resizerIcon}
+              alt="corner-drag"
+              width={20}
+              height={20}
+              className="opacity-100"
+            />
+          </div>
+        ),
+      }}
+      enableResizing={{
+        left: false,
+        right: false,
+        top: false,
+        bottom: false,
+        bottomRight: true,
+        bottomLeft: false,
+        topRight: false,
+        topLeft: false,
+      }}
+      lockAspectRatio={false}
+      style={{ cursor: "default" }}
+      onResizeStop={(e, direction, ref, delta, position) => {
+        setComponentSize({
+          width: ref.style.width,
+          height: ref.style.height
+        });
+      }}
+    >
+      <Collapsible
+        className={`flex flex-col w-full h-full relative`}
+        defaultOpen
+      >
+        <Card
+          className={`flex flex-col w-full relative transition-all duration-500 ${
+            isCollapsed ? "h-[100px] overflow-hidden" : "h-full"
+          }`}
         >
-            <Card className="flex flex-col w-full h-full relative">
-              <CardHeader>
-                <CardTitle className="text-2xl">Visualisations</CardTitle>
-              </CardHeader>
-              <CardContent className="flex-1 overflow-hidden p-1 flex justify-center items-center mb-10">
-                  <Carousel className="w-full max-w-xl max-h-fit">
-                    <CarouselContent>
-                      {processedChunks.length > 0
-                        ? processedChunks.map((chunk, index) => (
-                            <CarouselItem key={index}>
-                              <div className="p-1">
-                                <Card className="">
-                                  <CardContent className="flex aspect-video flex-col items-center justify-center p-1 max-h-fit">
-                                  <div className="flex w-full justify-between">
-                                    <span>
-                                      Accuracy : {chunk.score}
-                                    </span>
-                                    <PopoverButton
-                                      title="Ajouter à"
-                                      onInteraction="click"
-                                      content={
-                                        <div className="flex flex-col space-y-2">
-                                          {popoverContentButtons.map((text, index) => (
-                                            <Button key={index} variant="ghost" size="sm" className="justify-start">
-                                              {text}
-                                            </Button>
-                                          ))}
-                                        </div>
-                                      }
-                                    >
-                                      <Button variant="ghost" size="icon" className="rounded-full bg-emerald-50">
-                                        <Icons.PdfExport color="#0D9488"/>
-                                      </Button>
-                                    </PopoverButton>
-                                  </div>
-                                    <span className="text-sm font-medium">
-                                      {chunk.file}
-                                    </span>
-                                    <Separator className="my-1" />
-                                    <ScrollArea className="w-full h-full pr-2">
-                                      <span className="text-xs font-normal">
-                                        {chunk.content}
-                                      </span>
-                                    </ScrollArea>
-                                  </CardContent>
-                                </Card>
-                              </div>
-                            </CarouselItem>
-                          ))
-                        : Array.from({ length: 0 }).map((_, index) => (
-                            <CarouselItem key={index}>
-                              <div className="p-1">
-                                <Card className="bg-blue-800">
-                                  <CardContent className="flex aspect-video flex-col items-center justify-center p-1">
-                                    {/* <span className="text-4xl font-semibold">
-                                      {index + 1}
-                                    </span> */}
-                                    <FinancialChart />
-                                  </CardContent>
-                                </Card>
-                              </div>
-                            </CarouselItem>
-                        ))
-                      }
-                    </CarouselContent>
+          <CardHeader className="flex flex-row justify-between items-center">
+            <CardTitle className="text-2xl">Visualiser vos réponses</CardTitle>
+            <div className="flex space-x-2">
+              {/* Minimize Button */}
+              <CollapsibleTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full hover:bg-emerald-50 border"
+                  onClick={handleMinimize}
+                >
+                  <Minus className="h-5 w-5 text-gray-500" />
+                </Button>
+              </CollapsibleTrigger>
+              {/* Close Button */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full hover:bg-emerald-50 border"
+                onClick={handleClose}
+              >
+                <X className="h-5 w-5 text-gray-500" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CollapsibleContent
+            className={`transition-all duration-500 ${
+              isCollapsed ? "h-0 opacity-0 overflow-hidden" : "h-full opacity-100"
+            }`}
+          >
+            <CardContent className="flex-1 overflow-hidden p-1 flex justify-center items-center mb-10">
+              <Carousel className="w-full max-w-xl max-h-fit">
+                <CarouselContent>
+                  {processedChunks.length > 0
+                    ? processedChunks.map((chunk, index) => (
+                        <CarouselItem key={index}>
+                          <div className="p-1">
+                            <Card>
+                              <CardContent className="flex aspect-video flex-col items-center justify-center p-1 max-h-fit">
+                                <div className="flex w-full justify-between">
+                                  <span>Accuracy : {chunk.score}</span>
+                                </div>
+                                <span className="text-sm font-medium">{chunk.file}</span>
+                                <Separator className="my-1" />
+                                <ScrollArea className="w-full h-full pr-2">
+                                  <span className="text-xs font-normal">{chunk.content}</span>
+                                </ScrollArea>
+                              </CardContent>
+                            </Card>
+                          </div>
+                        </CarouselItem>
+                      ))
+                    : Array.from({ length: 0 }).map((_, index) => (
+                        <CarouselItem key={index}>
+                          <div className="p-1">
+                            <Card className="bg-blue-800">
+                              <CardContent className="flex aspect-video flex-col items-center justify-center p-1">
+                                <FinancialChart />
+                              </CardContent>
+                            </Card>
+                          </div>
+                        </CarouselItem>
+                      ))}
+                </CarouselContent>
+                {processedChunks.length > 1 && (
+                  <>
                     <CarouselPrevious />
                     <CarouselNext />
-                  </Carousel>
-              </CardContent>
-            </Card>
-        </Rnd>
-    );
+                  </>
+                )}
+              </Carousel>
+            </CardContent>
+          </CollapsibleContent>
+        </Card>
+      </Collapsible>
+    </Rnd>
+  );
 }

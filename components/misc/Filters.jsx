@@ -26,48 +26,48 @@ export default function Filters(dimensions = { width: 400, height: 396}) {
   };
 
   return (
-    <Rnd
-      default={{
-        x: 0,
-        y: 0,
-        width: 400,
-        height: 396,
-      }}
-      bounds="window"
-      minWidth={300} 
-      minHeight={300} 
-      style={{ cursor: "default" }} 
-      resizeHandleComponent={{
-        bottomRight: (
-          <div className="opacity-30 absolute bottom-1.5 right-1.5 pointer-events-none z-50">
-            <Image
-              src={resizerIcon}
-              alt="corner-drag"
-              width={20}
-              height={20}
-              className="pointer-events-none"
-            />
-          </div>
-        ),
-      }}
-      enableResizing={{
-        left: false,
-        right: false,
-        top: false,
-        bottom: false,
-        bottomRight: true, 
-        bottomLeft: false,
-        topRight: false,
-        topLeft: false,
-      }}
-      lockAspectRatio={false} 
-      onResizeStop={(e, direction, ref) => {
-        const width = ref.style.width.replace("px", "");
-        const height = ref.style.height.replace("px", "");
+    // <Rnd
+    //   default={{
+    //     x: 0,
+    //     y: 0,
+    //     width: 400,
+    //     height: 396,
+    //   }}
+    //   bounds="window"
+    //   minWidth={300} 
+    //   minHeight={300} 
+    //   style={{ cursor: "default" }} 
+    //   resizeHandleComponent={{
+    //     bottomRight: (
+    //       <div className="opacity-30 absolute bottom-1.5 right-1.5 pointer-events-none z-50">
+    //         <Image
+    //           src={resizerIcon}
+    //           alt="corner-drag"
+    //           width={20}
+    //           height={20}
+    //           className="pointer-events-none"
+    //         />
+    //       </div>
+    //     ),
+    //   }}
+    //   enableResizing={{
+    //     left: false,
+    //     right: false,
+    //     top: false,
+    //     bottom: false,
+    //     bottomRight: true, 
+    //     bottomLeft: false,
+    //     topRight: false,
+    //     topLeft: false,
+    //   }}
+    //   lockAspectRatio={false} 
+    //   onResizeStop={(e, direction, ref) => {
+    //     const width = ref.style.width.replace("px", "");
+    //     const height = ref.style.height.replace("px", "");
 
-        console.log("Resized to:", { width, height });
-      }}
-    >
+    //     console.log("Resized to:", { width, height });
+    //   }}
+    // >
       <Card className="w-full max-w-md border-0 bg-white rounded-2xl shadow-lg">
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between">
@@ -166,6 +166,6 @@ export default function Filters(dimensions = { width: 400, height: 396}) {
           </div>
         </CardContent>
       </Card>
-    </Rnd>
+    // </Rnd>
   );
 }

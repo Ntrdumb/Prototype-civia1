@@ -33,8 +33,13 @@ export default function Home() {
   };
   
   return (
-    <div className="h-screen gradient-anim">
-        <main className="relative content-center h-full w-full">
+    <div className="h-screen gradient-anim overflow-hidden">
+        <main className="relative content-center h-full w-full overflow-hidden">
+
+          {filtersVisibility && (
+              <Filters />
+          )}
+
           {chatbotVisibility && (
               <ChatbotInterface dimensions={{ width: 400, height: 500 }} />
           )}
@@ -44,9 +49,6 @@ export default function Home() {
             <Visualisations dimensions={{ width: 700, height: 500 }} />
           )}
           
-          {filtersVisibility && (
-            <Filters />
-          )}
           <BottomNav
             onItemClick={(item) => {
               if (item === "Chat") {
