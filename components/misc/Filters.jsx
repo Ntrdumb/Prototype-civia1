@@ -73,21 +73,21 @@ export default function Filters(dimensions = { width: 400, height: 396}) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-emerald-600">
               <Filter className="h-5 w-5" />
-              <CardTitle>Filtres</CardTitle>
+              <CardTitle>Filters</CardTitle>
             </div>
             <Button
               variant="outline"
               size="sm"
               className="rounded-lg border-dashed"
             >
-              Ajouter des filtres
+              Add filters
               <Plus className="h-4 w-4" />
             </Button>
           </div>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-4">
-            <h3 className="font-medium">Catégories de dépenses</h3>
+            <h3 className="font-medium">Expense categories</h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <Checkbox id="suppliers" />
@@ -95,7 +95,7 @@ export default function Filters(dimensions = { width: 400, height: 396}) {
                   htmlFor="suppliers"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  Fournisseurs
+                  Suppliers
                 </label>
               </div>
               <div className="flex items-center space-x-2">
@@ -104,7 +104,7 @@ export default function Filters(dimensions = { width: 400, height: 396}) {
                   htmlFor="salaries"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  Salaires
+                  Salaries
                 </label>
               </div>
               <div className="flex items-center space-x-2">
@@ -120,15 +120,15 @@ export default function Filters(dimensions = { width: 400, height: 396}) {
           </div>
 
           <div className="space-y-4">
-            <h3 className="font-medium">Période</h3>
+            <h3 className="font-medium">Period</h3>
             <Select defaultValue="monthly">
               <SelectTrigger className="w-[140px]">
                 <SelectValue placeholder="Select period" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="monthly">Par mois</SelectItem>
-                <SelectItem value="quarterly">Par trimestre</SelectItem>
-                <SelectItem value="yearly">Par année</SelectItem>
+                <SelectItem value="monthly">Per month</SelectItem>
+                <SelectItem value="quarterly">By quarter</SelectItem>
+                <SelectItem value="yearly">By year</SelectItem>
               </SelectContent>
             </Select>
 

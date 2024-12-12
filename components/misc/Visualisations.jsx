@@ -47,8 +47,8 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
   // Could be replaced 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   useEffect(() => {
-    const x = window.innerWidth - dimensions.width - 10;
-    const y = window.innerWidth / 15;
+    const x = window.innerWidth / 2;
+    const y = window.innerWidth / 12;
     setPosition({ x, y });
   }, [dimensions.width]);
 
@@ -145,7 +145,7 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
           }`}
         >
           <CardHeader className="flex flex-row justify-between items-center">
-            <CardTitle className="text-xl">Visualiser vos réponses</CardTitle>
+            <CardTitle className="text-xl">View your answers</CardTitle>
             <div className="flex space-x-2">
               {/* Minimize Button */}
               <CollapsibleTrigger asChild>
@@ -177,7 +177,7 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
             <CardContent className="flex-1 overflow-hidden p-1 flex grow justify-center items-center mt-10">
               <Carousel 
                 setApi={setApi}
-                className="w-full max-w-xl max-h-fit" 
+                className="w-full max-w-xl max-h-fit grow" 
                 opts={{
                   align: "center",
                   loop: true,

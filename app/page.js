@@ -57,7 +57,7 @@ export default function Home() {
               else if (item === "Visualisations") {
                 toggleChartVisibility();
               }
-              else if (item === "Filtres") {
+              else if (item === "Filters") {
                 toggleFiltersVisibility();
               }
               console.log(`Clicked ${item}`);

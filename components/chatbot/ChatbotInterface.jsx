@@ -14,8 +14,8 @@ import useNavStore from "@/reducer/navStore";
 const initialMessages = [
   {
     role: "chatbot",
-    content: "Quel est ton objectif par rapport à cette analyse? (quelques suggestions ci-dessous)",
-    options: ["Explorer", "Visualiser les catégories de dépenses les plus importantes"],
+    content: "What is your goal with this analysis? (some suggestions below)",
+    options: ["Explore", "View the biggest spending categories"],
   },
 ];
 
@@ -30,6 +30,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
     height: dimensions.height
   });
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [typing, setTyping] = useState(false);
 
   const setChunks = useChatStore((state) => state.setChunks);
 
@@ -62,6 +63,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
 
     setMessages([...messages, { role: "user", content: input }]);
     setInput("");
+    setTyping(true);
 
     try {
       const response = await axios.post("/api/civia-question", { user_query: input });
@@ -77,6 +79,8 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
         ...prev,
         { role: "chatbot", content: "Sorry, an error occurred while processing your request." },
       ]);
+    } finally {
+      setTyping(false); 
     }
   };
 
@@ -142,7 +146,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
         }`}
       >
         <CardHeader className="flex flex-row justify-between items-center">
-          <CardTitle className="text-xl">Chatbot</CardTitle>
+          <CardTitle className="text-xl">Ask your questions</CardTitle>
           <div className="flex space-x-2">
             {/* Minimize Button */}
             <Button
@@ -182,7 +186,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
                         message.role === "chatbot" ? "text-muted-foreground" : "text-primary-foreground"
                       }`}
                     >
-                      {message.role === "chatbot" ? "Civ.IA" : "Vous"}
+                      {message.role === "chatbot" ? "Civ.IA" : "You"}
                     </span>
                     <div
                       className={`border rounded-lg border-gray-300 p-3 mt-1 ${
@@ -212,6 +216,16 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
                   </div>
                 </div>
               ))}
+              {/* Typing Indicator */}
+              {typing && (
+                <div className="flex justify-start">
+                  <div className="typing-indicator">
+                    <div className="typing-dot"></div>
+                    <div className="typing-dot"></div>
+                    <div className="typing-dot"></div>
+                  </div>
+                </div>
+              )}
               <div ref={messagesEndRef} />
             </CardContent>
           </ScrollArea>
