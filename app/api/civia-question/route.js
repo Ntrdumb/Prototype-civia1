@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 const serverURL = process.env.SERVER_API;
 
-export const maxDuration = 180;
+export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 const apiUrl = serverURL + '/api/sagard_qna';
 
