@@ -21,7 +21,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
@@ -40,6 +39,14 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
   const chunks = useChatStore((state) => state.chunks);
 
   const popoverContentButtons = ["Rapport Finances", "Rapport Emplois", "Nouveau rapport"];
+  
+  // Could be replaced 
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  useEffect(() => {
+    const x = window.innerWidth - dimensions.width - 10;
+    const y = window.innerWidth / 15;
+    setPosition({ x, y });
+  }, [dimensions.width]);
 
   const processedChunks = useMemo(() => {
     if (!chunks) return [];
@@ -60,12 +67,7 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
 
   return (
     <Rnd
-      default={{
-        x: 0,
-        y: 0,
-        width: dimensions.width,
-        height: dimensions.height,
-      }}
+      position={position} 
       size={{
         width: componentSize.width,
         height: isCollapsed ? 100 : componentSize.height,
@@ -101,11 +103,14 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
       }}
       lockAspectRatio={false}
       style={{ cursor: "default" }}
-      onResizeStop={(e, direction, ref, delta, position) => {
+      onResizeStop={(e, direction, ref, delta, newPosition) => {
         setComponentSize({
-          width: ref.style.width,
-          height: ref.style.height
+          width: parseInt(ref.style.width),
+          height: parseInt(ref.style.height),
         });
+      }}
+      onDragStop={(e, d) => {
+        setPosition({ x: d.x, y: d.y });
       }}
     >
       <Collapsible
@@ -118,7 +123,7 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
           }`}
         >
           <CardHeader className="flex flex-row justify-between items-center">
-            <CardTitle className="text-2xl">Visualiser vos réponses</CardTitle>
+            <CardTitle className="text-xl">Visualiser vos réponses</CardTitle>
             <div className="flex space-x-2">
               {/* Minimize Button */}
               <CollapsibleTrigger asChild>
@@ -147,12 +152,21 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
               isCollapsed ? "h-0 opacity-0 overflow-hidden" : "h-full opacity-100"
             }`}
           >
-            <CardContent className="flex-1 overflow-hidden p-1 flex justify-center items-center mb-10">
-              <Carousel className="w-full max-w-xl max-h-fit">
-                <CarouselContent>
+            <CardContent className="flex-1 overflow-hidden p-1 flex grow justify-center items-center mt-10">
+              <Carousel 
+                className="w-full max-w-xl max-h-fit" 
+                opts={{
+                  align: "center",
+                  loop: true,
+                  skipSnaps: true,
+                  containScroll: "trimSnaps",
+                }}
+              >
+                <CarouselContent className="ml-1 mr-1">
                   {processedChunks.length > 0
                     ? processedChunks.map((chunk, index) => (
-                        <CarouselItem key={index}>
+                      <CarouselItem key={index} className="basis-[90%] flex-grow h-auto pl-1 pr-1">
+
                           <div className="p-1">
                             <Card>
                               <CardContent className="flex aspect-video flex-col items-center justify-center p-1 max-h-fit">

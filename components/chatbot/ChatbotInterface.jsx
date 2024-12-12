@@ -29,6 +29,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
     width: dimensions.width,
     height: dimensions.height
   });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const setChunks = useChatStore((state) => state.setChunks);
 
@@ -47,6 +48,12 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    const xPosition = window.innerWidth / 4;
+    const yPosition = window.innerWidth / 12;
+    setPosition({ x: xPosition, y: yPosition });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -75,21 +82,27 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
 
   return (
     <Rnd
-      default={{
-        x: 0,
-        y: 0,
-        width: dimensions.width,
-        height: dimensions.height,
-      }}
+      position={position}
+      // default={{
+      //   // x: window.innerWidth / 3, // Was 0
+      //   // y: window.innerHeight / 2 - dimensions.height / 2, // Was 0
+      //   width: dimensions.width,
+      //   height: dimensions.height,
+      // }}
       size={{
         width: componentSize.width,
         height: isCollapsed ? 100 : componentSize.height,
       }}
       onResizeStop={(e, direction, ref, delta, position) => {
         setComponentSize({
-          width: ref.style.width,
-          height: ref.style.height
+          // width: ref.style.width,
+          // height: ref.style.height
+          width: parseInt(ref.style.width),
+          height: parseInt(ref.style.height),
         });
+      }}
+      onDragStop={(e, data) => {
+        setPosition({ x: data.x, y: data.y });
       }}
       bounds="window"
       minWidth={370}
@@ -129,7 +142,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
         }`}
       >
         <CardHeader className="flex flex-row justify-between items-center">
-          <CardTitle>Chatbot</CardTitle>
+          <CardTitle className="text-xl">Chatbot</CardTitle>
           <div className="flex space-x-2">
             {/* Minimize Button */}
             <Button
