@@ -10,7 +10,7 @@ export function BottomNav({ className, onItemClick, ...props }) {
 
   const navItems = [
     { icon: <Sparkles className="!h-8 !w-8 text-teal-600" />, label: "Chat" },
-    { icon: <Upload className="!h-8 !w-8 text-teal-600" />, label: "Upload" },
+    // { icon: <Upload className="!h-8 !w-8 text-teal-600" />, label: "Upload" },
     { icon: <Filter className="!h-8 !w-8 text-teal-600" />, label: "Filters" },
     { icon: <PieChart className="!h-8 !w-8 text-teal-600" />, label: "Visualisations" },
     { icon: <FileText className="!h-8 !w-8 text-gray-400" />, label: "Report", locked: true },
