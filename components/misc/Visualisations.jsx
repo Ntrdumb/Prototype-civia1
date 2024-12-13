@@ -146,7 +146,7 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
           }`}
         >
           <CardHeader className="flex flex-row justify-between items-center draggable">
-            <CardTitle className="text-xl">View your answers</CardTitle>
+            <CardTitle className="text-xl">View source</CardTitle>
             <div className="flex space-x-2">
               {/* Minimize Button */}
               <CollapsibleTrigger asChild>

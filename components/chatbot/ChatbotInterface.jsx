@@ -68,7 +68,10 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
     try {
       const response = await axios.post("/api/civia-question", { user_query: input });
 
-      const { chunks, botResponse } = response.data;
+      let { chunks, botResponse } = response.data;
+      if (botResponse === "The answer is not available in the provided documentation.") {
+        botResponse = "Please refer to 'view source'.";
+      }
       if (chunks) setChunks(chunks);
 
       setMessages((prev) => [...prev, { role: "chatbot", content: botResponse }]);
