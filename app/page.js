@@ -13,24 +13,14 @@ import { DndContext } from "@dnd-kit/core";
 import FinancialChart from "@/components/misc/FinancialChart";
 import Filters from "@/components/misc/Filters";
 import Visualisations from "@/components/misc/Visualisations";
+import UploadBox from "@/components/uploader/UploadBox";
 
 export default function Home() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const { chatbotVisibility, toggleChatbotVisibility } = useNavStore();
-  const { chartVisibility, toggleChartVisibility } = useNavStore();
-  const { filtersVisibility, toggleFiltersVisibility } = useNavStore();
-  const chatbotRef = useRef(null); 
-
-  const handleDragEnd = (event) => {
-    if (!event.delta) return;
-
-    // Calculate and update the position
-    setPosition((prev) => ({
-      x: prev.x + event.delta.x,
-      y: prev.y + event.delta.y,
-    }));
-    console.log("Drag ended. New position:", position);
-  };
+  const { chatbotVisibility, toggleChatbotVisibility,
+    chartVisibility, toggleChartVisibility,
+    filtersVisibility, toggleFiltersVisibility, 
+    uploadVisibility, toggleUploadVisibility,
+   } = useNavStore();
   
   return (
     <div className="h-screen gradient-anim overflow-hidden">
@@ -48,7 +38,11 @@ export default function Home() {
             // <FinancialChart dimensions={{ width: 200, height: 600 }} />
             <Visualisations dimensions={{ width: 700, height: 500 }} />
           )}
-          
+
+          {uploadVisibility && (
+            <UploadBox dimensions={{ width: 1000, height: 600 }}/>
+          )}
+
           <BottomNav
             onItemClick={(item) => {
               if (item === "Chat") {
@@ -59,6 +53,9 @@ export default function Home() {
               }
               else if (item === "Filters") {
                 toggleFiltersVisibility();
+              }
+              else if (item === "Upload") {
+                toggleUploadVisibility();
               }
               console.log(`Clicked ${item}`);
             }}

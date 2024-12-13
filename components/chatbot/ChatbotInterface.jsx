@@ -97,6 +97,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
         width: componentSize.width,
         height: isCollapsed ? 100 : componentSize.height,
       }}
+      dragHandleClassName="draggable"
       onResizeStop={(e, direction, ref, delta, position) => {
         setComponentSize({
           // width: ref.style.width,
@@ -110,7 +111,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
       }}
       bounds="window"
       minWidth={370}
-      minHeight={isCollapsed ? 100 : 200} 
+      minHeight={isCollapsed ? 100 : 250} 
       maxWidth={700}
       maxHeight={isCollapsed ? 100 : 785} 
       resizeHandleStyles={{ bottomRight: { right: "1px", bottom: "1px" } }}
@@ -145,7 +146,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
           isCollapsed ? "h-[100px] overflow-hidden" : "h-full"
         }`}
       >
-        <CardHeader className="flex flex-row justify-between items-center">
+        <CardHeader className="flex flex-row justify-between items-center draggable">
           <CardTitle className="text-xl">Ask your questions</CardTitle>
           <div className="flex space-x-2">
             {/* Minimize Button */}

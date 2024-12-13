@@ -94,6 +94,7 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
         width: componentSize.width,
         height: isCollapsed ? 100 : componentSize.height,
       }}
+      dragHandleClassName="draggable"
       bounds="window"
       minWidth={700}
       minHeight={isCollapsed ? 100 : 430}
@@ -144,7 +145,7 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
             isCollapsed ? "h-[100px] overflow-hidden" : "h-full"
           }`}
         >
-          <CardHeader className="flex flex-row justify-between items-center">
+          <CardHeader className="flex flex-row justify-between items-center draggable">
             <CardTitle className="text-xl">View your answers</CardTitle>
             <div className="flex space-x-2">
               {/* Minimize Button */}
@@ -181,8 +182,8 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
                 opts={{
                   align: "center",
                   loop: true,
-                  // skipSnaps: true,
-                  // containScroll: "trimSnaps",
+                  watchDrag: false, 
+                  containScroll: "trimSnaps",
                 }}
               >
                 <CarouselContent className="ml-1 mr-1">

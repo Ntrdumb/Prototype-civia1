@@ -74,4 +74,8 @@
 .typing-dot:nth-child(3) {
     animation-delay: 0.4s;
 }
+
+.draggable {
+    cursor: move;
+}
   

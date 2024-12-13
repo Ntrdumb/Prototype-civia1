@@ -9,6 +9,9 @@ const useNavStore = create((set) => ({
     
     filtersVisibility: false, 
     toggleFiltersVisibility: () => set((state) => ({ filtersVisibility: !state.filtersVisibility })),
+
+    uploadVisibility: false, 
+    toggleUploadVisibility: () => set((state) => ({ uploadVisibility: !state.uploadVisibility })),
 }));
 
 export default useNavStore;
