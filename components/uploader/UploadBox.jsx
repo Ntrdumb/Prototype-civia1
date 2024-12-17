@@ -88,7 +88,7 @@ export default function UploadForm({ dimensions = { width: 400, height: 400 } })
   return (
     <div
       className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-      style={{ zIndex: 9999 }}
+      style={{ zIndex: 45 }}
     >
       <Card className="rounded-2xl px-36 py-20" style={{ width: cardWidth, height: cardHeight }}>
         <CardHeader className="space-y-2 mb-8 text-start">
@@ -144,7 +144,7 @@ export default function UploadForm({ dimensions = { width: 400, height: 400 } })
 
           {(uploadInProgress || uploadComplete) && (
             <div className="w-full mt-6">
-              <Progress value={progress} indicatorColor="bg-emerald-500" className="rounded-xl" />
+              <Progress value={progress} indicatorColor="bg-primary2" className="rounded-xl" />
             </div>
           )}
 

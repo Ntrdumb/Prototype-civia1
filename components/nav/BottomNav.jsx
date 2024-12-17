@@ -4,15 +4,16 @@ import React, { useState } from "react";
 import { Sparkles, Download, Upload, Filter, PieChart, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip } from "../misc/ToolTip";
+import { primary1, primary2 } from "@/constants/colors";
 
 export function BottomNav({ className, onItemClick, ...props }) {
   const [indicatorPosition, setIndicatorPosition] = useState(0);
 
   const navItems = [
-    { icon: <Sparkles className="!h-8 !w-8 text-teal-600" />, label: "Chat" },
-    // { icon: <Upload className="!h-8 !w-8 text-teal-600" />, label: "Upload" },
-    { icon: <Filter className="!h-8 !w-8 text-teal-600" />, label: "Filters" },
-    { icon: <PieChart className="!h-8 !w-8 text-teal-600" />, label: "Visualisations" },
+    { icon: <Sparkles className="!h-8 !w-8" style={{ color: primary1 }} />, label: "Chat" },
+    { icon: <Upload className="!h-8 !w-8" style={{ color: primary1 }} />, label: "Upload" },
+    { icon: <Filter className="!h-8 !w-8" style={{ color: primary1 }} />, label: "Filters" },
+    { icon: <PieChart className="!h-8 !w-8" style={{ color: primary1 }} />, label: "Visualisations" },
     { icon: <FileText className="!h-8 !w-8 text-gray-400" />, label: "Report", locked: true },
   ];
 
@@ -27,9 +28,10 @@ export function BottomNav({ className, onItemClick, ...props }) {
       <div className="relative flex items-center gap-4 rounded-full bg-white px-20 py-3">
         {/* Moving Indicator */}
         <div
-          className="absolute bottom-0 h-1 w-16 bg-teal-600 rounded-full transition-transform duration-300"
+          className="absolute bottom-0 h-1 w-16 rounded-full transition-transform duration-300"
           style={{
             transform: `translateX(${indicatorPosition * 5}rem)`,
+            backgroundColor: primary2,
           }}
         ></div>
 
@@ -40,7 +42,7 @@ export function BottomNav({ className, onItemClick, ...props }) {
               variant="ghost"
               size="icon"
               className={`relative group h-16 w-16 rounded-full border ${
-                item.locked ? "border-gray-300 cursor-not-allowed opacity-50" : "border-teal-600 hover:bg-emerald-50"
+                item.locked ? "border-gray-300 cursor-not-allowed opacity-50" : "border-primary1 hover:bg-primary3"
               }`}
               onMouseEnter={() => handleMouseEnter(index)}
               onClick={() => !item.locked && onItemClick && onItemClick(item.label)}

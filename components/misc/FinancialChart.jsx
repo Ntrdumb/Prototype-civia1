@@ -10,6 +10,7 @@ import Image from "next/image";
 import resizerIcon from "@/public/icons/resize-window.svg"; 
 import ActualBarChart from "./ActualBarChart";
 import Icons from "../icons/icons";
+import { primary1 } from "@/constants/colors";
 
 const data = [
   { year: "2025", amount: 1000000 },
@@ -90,7 +91,7 @@ export default function FinancialChart(dimensions = { width: 700, height: 400}) 
                   strokeLinejoin="round"
                 />
               </svg> */}
-              <Icons.PdfExport color="#0D9488"/>
+              <Icons.PdfExport color={primary1}/>
             </Button>
           </div>
         </CardHeader>

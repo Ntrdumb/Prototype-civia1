@@ -71,7 +71,7 @@ export default function Filters(dimensions = { width: 400, height: 396}) {
       <Card className="w-full max-w-md border-0 bg-white rounded-2xl shadow-lg">
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-emerald-600">
+            <div className="flex items-center gap-2 text-primary1">
               <Filter className="h-5 w-5" />
               <CardTitle>Filters</CardTitle>
             </div>
@@ -142,10 +142,10 @@ export default function Filters(dimensions = { width: 400, height: 396}) {
                 onValueChange={handleSliderChange}
               >
                 <SliderPrimitive.Track className="relative flex-grow h-1 bg-gray-300 rounded-full">
-                  <SliderPrimitive.Range className="absolute h-full bg-emerald-500 rounded-full" />
+                  <SliderPrimitive.Range className="absolute h-full bg-primary1 rounded-full" />
                 </SliderPrimitive.Track>
                 <SliderPrimitive.Thumb
-                  className="block w-4 h-4 bg-emerald-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-400"
+                  className="block w-4 h-4 bg-primary1 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary1"
                 />
               </SliderPrimitive.Root>
               <div className="flex justify-between mt-2 text-sm">

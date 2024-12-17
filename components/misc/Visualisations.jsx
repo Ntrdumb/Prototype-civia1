@@ -28,6 +28,7 @@ import useChatStore from "@/reducer/chatStore";
 import Icons from "../icons/icons";
 import PopoverButton from "../builder/PopoverButton";
 import useNavStore from "@/reducer/navStore";
+import { primary2 } from "@/constants/colors";
   
 export default function Visualisations({ dimensions = { width: 200, height: 200 } }) {
   const [componentSize, setComponentSize] = useState({
@@ -234,7 +235,7 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
                           key={index}
                           onClick={() => api?.scrollTo(index)}
                           className={`w-3 h-3 rounded-full ${
-                            current === index + 1 ? "bg-teal-500" : "bg-gray-300"
+                            current === index + 1 ? "bg-primary1" : "bg-gray-300"
                           }`}
                         />
                       ))}

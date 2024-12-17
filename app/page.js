@@ -40,7 +40,7 @@ export default function Home() {
           )}
 
           {uploadVisibility && (
-            <UploadBox dimensions={{ width: 1000, height: 600 }}/>
+            <UploadBox dimensions={{ width: 1000, height: 580 }}/>
           )}
 
           <BottomNav

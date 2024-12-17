@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend } from "@/components/ui/chart";
+import { chartPrime1, chartPrime2 } from "@/constants/colors";
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -16,11 +17,11 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "#62CC9F",
+    color: chartPrime1,
   },
   mobile: {
     label: "Mobile",
-    color: "#3e8567",
+    color: chartPrime2,
   },
 };
 
