@@ -2,9 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import { Rnd } from "react-rnd";
 import axios from "axios";
 import Image from "next/image";
-import { Send, X, Minus } from "lucide-react";
+import { Send, X, Minus, ThumbsUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import resizerIcon from "@/public/icons/resize-window.svg";
@@ -31,6 +32,9 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
   });
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [typing, setTyping] = useState(false);
+  const [feedback, setFeedback] = useState({});
+  const [feedbackInput, setFeedbackInput] = useState(""); // State for worded feedback
+  const [submittedFeedback, setSubmittedFeedback] = useState({});
 
   const setChunks = useChatStore((state) => state.setChunks);
 
@@ -85,6 +89,15 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
     } finally {
       setTyping(false); 
     }
+  };
+
+  const handleFeedback = (index) => {
+    setFeedback((prev) => ({ ...prev, [index]: true }));
+  };
+  
+  const handleSubmitFeedback = (index) => {
+    setSubmittedFeedback((prev) => ({ ...prev, [index]: feedbackInput }));
+    setFeedbackInput("");
   };
 
   return (
@@ -156,7 +169,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full hover:bg-emerald-50 border"
+              className="rounded-full hover:bg-primary3 border"
               onClick={handleMinimize}
             >
               <Minus className="h-5 w-5 text-gray-500" />
@@ -165,7 +178,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full hover:bg-emerald-50 border"
+              className="rounded-full hover:bg-primary3 border"
               onClick={handleClose}
             >
               <X className="h-5 w-5 text-gray-500" />
@@ -201,6 +214,59 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
                     >
                       {message.content}
                     </div>
+                    {/* This is if u want a submit a feedback and like */}
+                    {/* {message.role === "chatbot" && index > 0 && (
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            onClick={() => handleFeedback(index)}
+                            className="flex items-center mt-1 text-xs text-gray-500 hover:text-green-500 transition-all duration-200"
+                          >
+                            <ThumbsUp className="h-4 w-4 mr-1" />
+                            <span className="text-xs">Thumbs Up</span>
+                          </button>
+                        </PopoverTrigger>
+                        {!submittedFeedback[index] && (
+                          <PopoverContent className="w-64 p-4 space-y-2">
+                            <h4 className="text-sm font-semibold">Leave feedback</h4>
+                            <Textarea
+                              placeholder="What did you like or want to share?"
+                              value={feedbackInput}
+                              onChange={(e) => setFeedbackInput(e.target.value)}
+                              className="h-24"
+                            />
+                            <Button
+                              size="sm"
+                              onClick={() => handleSubmitFeedback(index)}
+                              disabled={!feedbackInput.trim()}
+                            >
+                              Submit
+                            </Button>
+                          </PopoverContent>
+                        )}
+                        {submittedFeedback[index] && (
+                          <div className="mt-1 text-green-500 text-xs">
+                            Thank you for the feedback!
+                          </div>
+                        )}
+                      </Popover>
+                    )} */}
+                    
+                    {/*  This is if u want an instant like button */}
+                    {message.role === "chatbot" && index > 0 && !feedback[index] && (
+                      <button
+                        onClick={() => handleFeedback(index)}
+                        className="flex items-center mt-1 text-xs text-gray-500 hover:text-green-500 transition-all duration-200"
+                      >
+                        <ThumbsUp className="h-4 w-4 mr-1" /> 
+                        <span className="text-xs">Thumbs Up</span>
+                      </button>
+                    )}
+                    {message.role === "chatbot" && index > 0 && feedback[index] && (
+                      <div className="mt-1 text-green-500 text-xs flex items-center">
+                        <ThumbsUp className="h-4 w-4 mr-1" /> Thank you for the feedback!
+                      </div>
+                    )}
                     {message.options && (
                       <div className="flex flex-wrap gap-2 mt-2">
                         {message.options.map((option, i) => (
@@ -220,7 +286,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
                   </div>
                 </div>
               ))}
-              {/* Typing Indicator */}
+              {/* Typing Indicator (3 dots) */}
               {typing && (
                 <div className="flex justify-start">
                   <div className="typing-indicator">

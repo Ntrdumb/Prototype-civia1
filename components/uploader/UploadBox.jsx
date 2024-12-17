@@ -32,34 +32,42 @@ export default function UploadForm({ dimensions = { width: 400, height: 400 } })
   const cardWidth = Math.min(dimensions.width, windowSize.width * 0.9);
   const cardHeight = Math.min(dimensions.height, windowSize.height * 0.9);
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
-
+  
+    const file = files[0];
+    const fileName = file.name.split(".")[0]; 
+  
     setUploadInProgress(true);
     setProgress(0);
-    
-    // No directives yet
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval); 
-          setUploadInProgress(false);
-          setUploadComplete(true);
   
-          // Timer to reset back to normal
-          setTimeout(() => {
-            setProgress(0);
-            setUploadComplete(false);
-          }, 1500);
-  
-          return prev; 
-        }
-        return Math.min(prev + 10, 100); 
+    try {
+      const response = await fetch("/api/upload/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ indexName: fileName }),
       });
-    }, 200); 
-  };
   
+      const result = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to create index");
+      }
+  
+      console.log(result.message);
+  
+      setProgress(100);
+      setTimeout(() => {
+        setUploadInProgress(false);
+        setUploadComplete(true);
+      }, 500);
+    } catch (error) {
+      console.error("Error:", error.message);
+      alert("Failed to create index. Please try again.");
+      setUploadInProgress(false);
+    }
+  };  
 
   const handleButtonClick = (e) => {
     e.stopPropagation();

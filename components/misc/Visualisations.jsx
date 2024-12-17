@@ -154,7 +154,7 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="rounded-full hover:bg-emerald-50 border"
+                  className="rounded-full hover:bg-primary3 border"
                   onClick={handleMinimize}
                 >
                   <Minus className="h-5 w-5 text-gray-500" />
@@ -164,7 +164,7 @@ export default function Visualisations({ dimensions = { width: 200, height: 200 
               <Button
                 variant="ghost"
                 size="icon"
-                className="rounded-full hover:bg-emerald-50 border"
+                className="rounded-full hover:bg-primary3 border"
                 onClick={handleClose}
               >
                 <X className="h-5 w-5 text-gray-500" />
