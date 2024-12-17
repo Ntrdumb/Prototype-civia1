@@ -24,6 +24,14 @@ export default function Home() {
   
   return (
     <div className="h-screen gradient-anim overflow-hidden">
+        <div className="absolute top-4 left-4">
+          <img
+            src="/sagard_logo.png"
+            alt="Sagard Logo"
+            className="h-12 w-auto"
+          />
+        </div>
+
         <main className="relative content-center h-full w-full overflow-hidden">
 
           {filtersVisibility && (
