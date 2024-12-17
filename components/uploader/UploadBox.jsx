@@ -60,8 +60,9 @@ export default function UploadForm({ dimensions = { width: 400, height: 400 } })
       setProgress(100);
       setTimeout(() => {
         setUploadInProgress(false);
-        setUploadComplete(true);
-      }, 500);
+        setProgress(0);
+        setUploadComplete(false);
+      }, 1500);
     } catch (error) {
       console.error("Error:", error.message);
       alert("Failed to create index. Please try again.");
