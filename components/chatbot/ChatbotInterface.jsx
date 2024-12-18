@@ -74,7 +74,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
 
       let { chunks, botResponse } = response.data;
       if (botResponse === "The answer is not available in the provided documentation.") {
-        botResponse = "Please refer to 'view source'.";
+        botResponse = "I am unable to provide an exact responsable to your query. Please refer to the Sources panel for more information. If your question remains unanswered, kindly reach out to Sagard Legal for assistance.";
       }
       if (chunks) setChunks(chunks);
 
@@ -187,7 +187,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
         </CardHeader>
         {!isCollapsed && (
           <ScrollArea className="w-full h-full pr-4 scroll-area transition-all duration-500 ease-in-out">
-            <CardContent className="flex-1 overflow-auto p-4 space-y-4">
+            <CardContent className="flex-1 overflow-auto p-4 space-y-4 text-primary1">
               {messages.map((message, index) => (
                 <div
                   key={index}
@@ -271,6 +271,7 @@ export default function ChatbotInterface({ dimensions = { width: 200, height: 20
                       <div className="flex flex-wrap gap-2 mt-2">
                         {message.options.map((option, i) => (
                           <Button
+                            className="text-primary1"
                             key={i}
                             variant="secondary"
                             size="sm"

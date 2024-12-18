@@ -25,7 +25,7 @@ export function BottomNav({ className, onItemClick, ...props }) {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center p-4">
-      <div className="relative flex items-center gap-4 rounded-full bg-white px-20 py-3">
+      <div className="relative flex items-center gap-4 rounded-full bg-white shadow-lg px-20 py-3">
         {/* Moving Indicator */}
         <div
           className="absolute bottom-0 h-1 w-16 rounded-full transition-transform duration-300"
