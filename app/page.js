@@ -24,7 +24,7 @@ export default function Home() {
   
   return (
     <div className="h-screen gradient-anim overflow-hidden">
-        <div className="absolute top-4 left-4">
+        <div className="max-w-full mx-auto flex items-center py-4 px-6 bg-white">
           <img
             src="/sagard_logo.png"
             alt="Sagard Logo"

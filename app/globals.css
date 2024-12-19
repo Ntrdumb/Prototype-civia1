@@ -4,7 +4,7 @@
 
 .gradient-anim {
     animation: gradient 10s ease infinite;
-    background: linear-gradient(-45deg, #FFFF, #FFFF);
+    background: linear-gradient(-45deg, #365876, #4e7faa);
     background-size: 400% 400%;
 }
 
